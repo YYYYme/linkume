@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+ 	<link type="text/css" rel="stylesheet" href="../static/plugins/css/bootstrap.css"></link>
+ 	<script type="text/javascript" src="../static/plugins/js/jquery-3.2.1.min.js"></script>
+  </head>
+  
+  <body>
+    <input type="button" value='用户' onclick="userList()"/>
+    <table>
+    	<tr>
+    		<th>id</th>
+    		<th>姓名</th>
+    		<th>密码</th>
+    		<th>年龄</th>
+    	</tr>
+    	<tr>
+    		<td id="userId"></td>
+    		<td id="userName"></td>
+    		<td id="userPsw"></td>
+    		<td id="userAge"></td>
+    	</tr>
+    </table>
+  </body>
+  <script type="text/javascript">
+  	function userList(){
+  	//1.$.ajax带json数据的异步请求
+  		var aj = $.ajax( {  
+  		    url:'../user/queryUser',//
+  		    data:{  
+  		             id : 1 
+  		    },  
+  		    type:'post',  
+  		    cache:false,  
+  		    dataType:'json',  
+  		    success:function(data) {  
+  		        if(data.msg =="true" ){  
+  		        	console.log(data.data.id);
+  		            $('#userId').html(data.data.id);
+  		        }else{  
+  		            view(data.msg);  
+  		        }  
+  		     },  
+  		     error : function() {  
+  		          // view("异常！");  
+  		          alert("异常！");  
+  		     }  
+  		});
+  	}
+  </script>
+</html>
