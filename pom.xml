@@ -207,11 +207,11 @@
 			</exclusion>  
 		    </exclusions>
 		</dependency> 
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.activemq</groupId>
 		    <artifactId>activemq-all</artifactId>
 		    <version>5.11.2</version>
-		</dependency> 
+		</dependency>  -->
     </dependencies>
   <build>
     <finalName>linkume</finalName>
