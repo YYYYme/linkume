@@ -200,12 +200,18 @@
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>dubbo</artifactId>
 		    <version>2.5.3</version>
+		    <exclusions>  
+		    	<exclusion>  
+				<artifactId>spring</artifactId>  
+				<groupId>org.springframework</groupId>  
+			</exclusion>  
+		    </exclusions>
 		</dependency> 
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.activemq</groupId>
 		    <artifactId>activemq-all</artifactId>
 		    <version>5.11.2</version>
-		</dependency> 
+		</dependency>  -->
     </dependencies>
   <build>
     <finalName>linkume</finalName>
@@ -220,6 +226,17 @@
 	<directory>src/main/resources</directory>
 	</resource>
 	</resources>
+	<plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
   
 </project>
