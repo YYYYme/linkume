@@ -8,6 +8,7 @@ import com.cn.linkume.vo.PageData;
 public interface IUserService {
 	public User getUserById(int userId);
 	public List<User> queryAllUser();
+	public int deleteByPrimaryKey(int userId);
 	public boolean insertUser(User user);
 	/**
 	 * 根据条件查询用户

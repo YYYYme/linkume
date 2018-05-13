@@ -175,4 +175,29 @@ public class UserController {
 		}
 		return ajaxResultVo;
 	}
+	
+	/**
+	 * 删除用户（by id)
+	 *
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author chenwenc
+	 * @date 
+	 */
+	@RequestMapping(value = "/deleteUserById")
+	@ResponseBody
+	public AjaxResultVo deleteUserById(HttpServletRequest request) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
+		String userId = request.getParameter("id");
+		int retInt = this.userService.deleteByPrimaryKey(Integer.parseInt(userId));
+		if(retInt != 0){
+			ajaxResultVo.setRet(true);
+			ajaxResultVo.setMsg(String.format("删除用户%s成功", userId));
+		}else{
+			ajaxResultVo.setRet(false);
+			ajaxResultVo.setMsg(String.format("您输入的用户%s不存在或者已经被删除！", userId));
+		}
+		return ajaxResultVo;
+	}
 }
