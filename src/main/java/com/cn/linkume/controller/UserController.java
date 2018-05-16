@@ -76,7 +76,7 @@ public class UserController {
 		return ajaxResultVo;
 	}
 	
-	@RequestMapping("/insertUser", produces = "text/html;charset=UTF-8")
+	@RequestMapping(value="/insertUser", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public AjaxResultVo insertUser(HttpServletRequest request, Model model) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
