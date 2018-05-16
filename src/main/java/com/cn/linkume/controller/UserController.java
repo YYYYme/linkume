@@ -142,7 +142,7 @@ public class UserController {
 	 * @author hanshumin
 	 * @date 2018年5月8日 上午10:32:40
 	 */
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public AjaxResultVo login(HttpServletRequest request) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
