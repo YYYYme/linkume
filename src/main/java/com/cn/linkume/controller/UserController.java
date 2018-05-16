@@ -76,7 +76,7 @@ public class UserController {
 		return ajaxResultVo;
 	}
 	
-	@RequestMapping(value="/insertUser", produces = "text/html;charset=UTF-8")
+	@RequestMapping(value="/insertUser")
 	@ResponseBody
 	public AjaxResultVo insertUser(HttpServletRequest request, Model model) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
@@ -142,7 +142,7 @@ public class UserController {
 	 * @author hanshumin
 	 * @date 2018年5月8日 上午10:32:40
 	 */
-	@RequestMapping(value = "/login", produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public AjaxResultVo login(HttpServletRequest request) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
@@ -151,13 +151,13 @@ public class UserController {
 		if (StringUtils.isBlank(userName)) {
 			ajaxResultVo.setCode(1);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("用户名为空");
+			ajaxResultVo.setMsg("userName is empty");
 			return ajaxResultVo;
 		}
 		if (StringUtils.isBlank(password)) {
 			ajaxResultVo.setCode(2);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("密码为空");
+			ajaxResultVo.setMsg("password is empty");
 			return ajaxResultVo;
 		}
 		User user = new User();
@@ -170,7 +170,7 @@ public class UserController {
 		} else {
 			ajaxResultVo.setCode(3);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("用户名或密码错误");
+			ajaxResultVo.setMsg("userName or password is wrong");
 			return ajaxResultVo;
 		}
 		return ajaxResultVo;
