@@ -76,7 +76,7 @@ public class UserController {
 		return ajaxResultVo;
 	}
 	
-	@RequestMapping(value="/insertUser")
+	@RequestMapping("/insertUser")
 	@ResponseBody
 	public AjaxResultVo insertUser(HttpServletRequest request, Model model) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
@@ -142,7 +142,7 @@ public class UserController {
 	 * @author hanshumin
 	 * @date 2018年5月8日 上午10:32:40
 	 */
-	@RequestMapping(value = "/login", produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "/login")
 	@ResponseBody
 	public AjaxResultVo login(HttpServletRequest request) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
@@ -151,13 +151,13 @@ public class UserController {
 		if (StringUtils.isBlank(userName)) {
 			ajaxResultVo.setCode(1);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("userName is empty");
+			ajaxResultVo.setMsg("用户名为空");
 			return ajaxResultVo;
 		}
 		if (StringUtils.isBlank(password)) {
 			ajaxResultVo.setCode(2);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("password is empty");
+			ajaxResultVo.setMsg("密码为空");
 			return ajaxResultVo;
 		}
 		User user = new User();
@@ -170,8 +170,33 @@ public class UserController {
 		} else {
 			ajaxResultVo.setCode(3);
 			ajaxResultVo.setRet(false);
-			ajaxResultVo.setMsg("userName or password is wrong");
+			ajaxResultVo.setMsg("用户名或密码错误");
 			return ajaxResultVo;
+		}
+		return ajaxResultVo;
+	}
+	
+	/**
+	 * 删除用户（by id)
+	 *
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author chenwenc
+	 * @date 
+	 */
+	@RequestMapping(value = "/deleteUserById")
+	@ResponseBody
+	public AjaxResultVo deleteUserById(HttpServletRequest request) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
+		String userId = request.getParameter("id");
+		int retInt = this.userService.deleteByPrimaryKey(Integer.parseInt(userId));
+		if(retInt != 0){
+			ajaxResultVo.setRet(true);
+			ajaxResultVo.setMsg(String.format("删除用户%s成功", userId));
+		}else{
+			ajaxResultVo.setRet(false);
+			ajaxResultVo.setMsg(String.format("您输入的用户%s不存在或者已经被删除！", userId));
 		}
 		return ajaxResultVo;
 	}

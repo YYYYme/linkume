@@ -46,4 +46,8 @@ public class UserServiceImpl implements IUserService {
 		pageData.setPageList(userList);
 		return pageData;
 	}
+	@Override
+	public int deleteByPrimaryKey(int userId) {
+		return this.userDao.deleteByPrimaryKey(userId);
+	}
 }
