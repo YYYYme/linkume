@@ -76,7 +76,7 @@ public class UserController {
 		return ajaxResultVo;
 	}
 	
-	@RequestMapping("/insertUser")
+	@RequestMapping("/insertUser", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public AjaxResultVo insertUser(HttpServletRequest request, Model model) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
@@ -142,7 +142,7 @@ public class UserController {
 	 * @author hanshumin
 	 * @date 2018年5月8日 上午10:32:40
 	 */
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public AjaxResultVo login(HttpServletRequest request) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
