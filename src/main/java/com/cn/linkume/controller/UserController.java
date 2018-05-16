@@ -185,7 +185,7 @@ public class UserController {
 	 * @author chenwenc
 	 * @date 
 	 */
-	@RequestMapping(value = "/deleteUserById")
+	@RequestMapping(value = "/deleteUser")
 	@ResponseBody
 	public AjaxResultVo deleteUserById(HttpServletRequest request) {
 		AjaxResultVo ajaxResultVo = new AjaxResultVo();
