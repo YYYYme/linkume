@@ -54,7 +54,7 @@
   	function deleteUserById(obj){
   		var $temp=$(obj).attr("id")
   		var con=confirm("确认删除用户"+$temp+"?")
-  		if(con=true){
+  		if(con){
 	  		var aj = $.ajax( {  
 	  		    url:'./user/deleteUser',
 	  		    data:{id:$temp},  
