@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.linkume.dao.IDepartmentDao" >
+  <resultMap id="BaseResultMap" type="com.cn.linkume.pojo.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dept_name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="jurisdiction" property="jurisdiction" jdbcType="VARCHAR" />
+    <result column="dept_status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dept_name, parent_id, jurisdiction, dept_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from department_t
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectSubDepts" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from department_t
+  	where parent_id = #{parentId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertDepartment" parameterType="com.cn.linkume.pojo.Department" >
+    insert into department_t (id, dept_name, parent_id, jurisdiction, dept_status, create_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{jurisdiction,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=DATE})
+  </insert>
+</mapper>
