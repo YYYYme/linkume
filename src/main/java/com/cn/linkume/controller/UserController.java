@@ -52,7 +52,8 @@ public class UserController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		List<User> user = this.userService.queryAllUser();
-		map.put("data", user);
+		map.put("rows", user);
+		map.put("total", user.size());
 		map.put("msg", "true");
 		return map;
 	}
@@ -125,7 +126,7 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Object> queryCount(HttpServletRequest request, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List user = this.userService.queryAllUser();
+		List<User> user = this.userService.queryAllUser();
 		int count = 0;
 		if (CollectionUtils.isNotEmpty(user)) {
 			count = user.size();
