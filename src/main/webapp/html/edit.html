@@ -1,42 +1,78 @@
 <html>
 <head>
-    <title>showUser</title>
+<title>showUser</title>
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="this is my page">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="../static/plugins/kindeditor/themes/default/default.css" />
+<script charset="utf-8"
+	src="../static/plugins/kindeditor/kindeditor-all.js"></script>
+<script charset="utf-8" src="../static/plugins/kindeditor/lang/zh-CN.js"></script>
 
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="this is my page">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-    <link type="text/css" rel="stylesheet" href="../static/plugins/css/bootstrap.css"></link>
-    <script type="text/javascript" src="../static/plugins/js/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="../static/plugins/kindeditor/themes/default/default.css"/>
-    <script charset="utf-8" src="../static/plugins/kindeditor/kindeditor-all.js"></script>
-    <script charset="utf-8" src="../static/plugins/kindeditor/lang/zh_CN.js"></script>
 </head>
-
 <body>
-<h3>默认模式1</h3>
-<textarea name="content" id="kindeditor" style="width:800px;height:400px;display: block;">KindEditor</textarea>
-<script>
-    function kedit(kedit){
-        var editor = KindEditor.create(kedit,{
-            width: '780px',
-            height: '700px',
-            resizeMode: 0,
-            allowPreviewEmoticons: false,
-            items: [
-                'bold', 'italic', 'underline',
-                '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'link']
-        });
-    }
-
-    $(function(){
-        kedit('textarea[name="content"]');
-    })
-
-</script>
-
+	<div>
+		<textarea name="content" id="kindeditor"
+			style="width: 800px; height: 400px; display: block;"></textarea>
+	</div>
+	<script>
+		function kedit(keid) {
+			var keditor = KindEditor
+					.create(
+							'#' + keid,
+							{
+								width : "80%", //编辑器的宽度为70%
+								height : "430px", //编辑器的高度为100px 
+								filterMode : false, //不会过滤HTML代码
+								resizeMode : 1,//编辑器只能调整高度 
+								imageUploadJson : '../static/plugins/kindeditor/jsp/upload_json.jsp',
+								fileManagerJson : '../static/plugins/kindeditor/jsp/file_manager_json.jsp',
+								allowUpload : true,
+								allowFileManager : true,
+								afterCreate : function() {
+									var self = this;
+									KindEditor.ctrl(document, 13, function() {
+										self.sync();
+										document.forms['example'].submit();
+									});
+									KindEditor.ctrl(self.edit.doc, 13,
+											function() {
+												self.sync();
+												document.forms['example']
+														.submit();
+											});
+								},
+								items : [ 'source', '|', 'undo', 'redo', '|',
+										'preview', 'print', 'code', 'cut',
+										'copy', 'paste', 'plainpaste',
+										'wordpaste', '|', 'justifyleft',
+										'justifycenter', 'justifyright',
+										'justifyfull', 'insertorderedlist',
+										'insertunorderedlist', 'indent',
+										'outdent', 'subscript', 'superscript',
+										'clearhtml', 'quickformat',
+										'selectall', '|', 'fullscreen', '/',
+										'formatblock', 'fontname', 'fontsize',
+										'|', 'forecolor', 'hilitecolor',
+										'bold', 'italic', 'underline',
+										'strikethrough', 'lineheight',
+										'removeformat', '|', 'table', 'hr',
+										'pagebreak', 'anchor', 'link',
+										'unlink', '|', 'image', 'multiimage',
+										'flash', 'media', 'insertfile',
+										'editImage' ],
+								afterBlur : function() {
+									this.sync();
+								},//和DWZ 的 Ajax onsubmit 冲突,提交表单时 编辑器失去焦点执行填充内容
+								newlineTag : "br"
+							});
+		}
+	</script>
+	<SCRIPT type="text/javascript">
+		$(function() {
+			kedit("kindeditor");
+		});
+	</SCRIPT>
 </body>
-
-
 </html>

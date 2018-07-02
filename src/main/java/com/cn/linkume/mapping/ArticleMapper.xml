@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.linkume.dao.ArticleDao" >
+  <resultMap id="BaseResultMap" type="com.cn.linkume.pojo.Article" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, text, pid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from article_t
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from article_t
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article_t
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertArticle" parameterType="com.cn.linkume.pojo.Article" >
+    insert into article_t (text, pid)
+    values (#{text,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.linkume.pojo.Article" useGeneratedKeys="true" keyProperty="id">
+    insert into article_t
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.linkume.pojo.User" >
+    update article_t
+    <set >
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.linkume.pojo.User" >
+    update article_t
+    set text = #{text,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryAllUser" resultMap="BaseResultMap">
+  	select id,text ,pid from article_t
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.cn.linkume.pojo.User">
+	select id,text ,pid from article_t 
+	<where>
+		<if test="text != null">
+			and text = #{text,jdbcType=VARCHAR}
+		</if>
+		<if test="pid != null">
+			and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+	</where>
+  </select>
+</mapper>
