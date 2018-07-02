@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>showUser</title>
+
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link type="text/css" rel="stylesheet" href="../static/plugins/css/bootstrap.css"></link>
+    <script type="text/javascript" src="../static/plugins/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="../static/plugins/kindeditor/themes/default/default.css"/>
+    <script charset="utf-8" src="../static/plugins/kindeditor/kindeditor-all.js"></script>
+    <script charset="utf-8" src="../static/plugins/kindeditor/lang/zh_CN.js"></script>
+</head>
+
+<body>
+<h3>默认模式1</h3>
+<textarea name="content" id="kindeditor" style="width:800px;height:400px;display: block;">KindEditor</textarea>
+<script>
+    function kedit(kedit){
+        var editor = KindEditor.create(kedit,{
+            width: '780px',
+            height: '700px',
+            resizeMode: 0,
+            allowPreviewEmoticons: false,
+            items: [
+                'bold', 'italic', 'underline',
+                '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'link']
+        });
+    }
+
+    $(function(){
+        kedit('textarea[name="content"]');
+    })
+
+</script>
+
+</body>
+
+
+</html>
