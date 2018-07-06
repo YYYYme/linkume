@@ -1,6 +1,5 @@
 package com.cn.linkume.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,12 +24,9 @@ public class ArticleController {
 	 */
 	@RequestMapping(value = "/getTree", method = RequestMethod.GET)
 	@ResponseBody
-	// 此注解表明返回值跳过视图处理部分，直接写入 http response body中
 	public List<Article> getTree() {
-		List<Article> root = articleService.findById(0); // 获取根节点（获取的值存到list中）
-		// JSONArray jsonArray = JSONArray.toJSON(buildTree(root));
-		// System.out.println(jsonArray.toString());
-
+		// 获取根节点（获取的值存到list中）
+		List<Article> root = articleService.findById(0);
 		return buildTree(root);
 	}
 	/**
@@ -38,16 +34,37 @@ public class ArticleController {
 	 */
 	@RequestMapping(value = "/addNode", method = RequestMethod.GET)
 	@ResponseBody
-	// 此注解表明返回值跳过视图处理部分，直接写入 http response body中
 	public Boolean addNode(String name ,Integer nodeId) {
-		Boolean result = articleService.addNode(name, nodeId); // 获取根节点（获取的值存到list中）
+		// 获取根节点（获取的值存到list中）
+		Boolean result = articleService.addNode(name, nodeId);
+		return result;
+	}
+	/**
+	 * 删除节点
+	 */
+	@RequestMapping(value = "/removeNode", method = RequestMethod.GET)
+	@ResponseBody
+	public Boolean removeNode(Integer nodeId) {
+		// 获取根节点（获取的值存到list中）
+		Boolean result = articleService.removeNode(nodeId);
+		return result;
+	}
+	/**
+	 * 重命名节点
+	 */
+	@RequestMapping(value = "/renameNode", method = RequestMethod.GET)
+	@ResponseBody
+	public Boolean renameNode(String newName, Integer nodeId) {
+		// 获取根节点（获取的值存到list中）
+		Boolean result = articleService.renameNode(newName, nodeId);
 		return result;
 	}
 
 	public List<Article> buildTree(List<Article> root) {
 		for (int i = 0; i < root.size(); i++) {
+			// 查询某节点的子节点（获取的是list）
 			List<Article> children = articleService.findByPid(root.get(i)
-					.getId()); // 查询某节点的子节点（获取的是list）
+					.getId());
 			buildTree(children);
 			root.get(i).setChildren(children);
 		}

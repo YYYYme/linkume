@@ -30,8 +30,9 @@
 			"></ul>
 	</div>
 	<div id="mm" class="easyui-menu" style="width:120px;">
-		<div onclick="append()" data-options="iconCls:'icon-add'">Append</div>
-		<div onclick="removeit()" data-options="iconCls:'icon-remove'">Remove</div>
+		<div onclick="append()" data-options="iconCls:'icon-add'">增加节点</div>
+		<div onclick="removeit()" data-options="iconCls:'icon-remove'">删除节点</div>
+		<div onclick="rename()" data-options="iconCls:'icon-application'">重命名</div>
 		<div class="menu-sep"></div>
 		<div onclick="expand()">展开</div>
 		<div onclick="collapse()">收起</div>
@@ -42,6 +43,7 @@
 	</div>
 	<script type="text/javascript">
 		function append(){
+
 			//节点名称
 			var name = prompt();
 			var t = $('#tt');
@@ -52,11 +54,33 @@
 					text: name
 				},
 			});
+            var isLeaf = judgeLeaf(node);
+            if (isLeaf){
+                alert("此处不可新增");
+                return;
+            }
 			addNode(name,node.id);
 		}
 		function removeit(){
+		    if (!confirm("确定删除？")){
+		        return;
+            }
 			var node = $('#tt').tree('getSelected');
+		    //根目录不可删除
+			if (node.id == 0){
+			    alert("根目录不可删除");
+			    return;
+			}
 			$('#tt').tree('remove', node.target);
+			removeNode(node.id);
+		}
+		//重命名
+		function rename(){
+			var node = $('#tt').tree('getSelected');
+            var newName = prompt("请输入名称：");
+            console.log(node);
+            renameNode(newName, node.id);
+            $("#tt").tree("reload");
 		}
 		function collapse(){
 			var node = $('#tt').tree('getSelected');
@@ -66,8 +90,8 @@
 			var node = $('#tt').tree('getSelected');
 			$('#tt').tree('expand',node.target);
 		}
+		//增加节点
 		function addNode(name,nodeId){
-			
 			$.ajax( {  
 	  		    url:'./article/addNode',//
 	  		    data:{
@@ -88,6 +112,57 @@
 	  		     }  
 	  		});
 		}
+		//删除节点
+		function removeNode(nodeId){
+			$.ajax( {
+	  		    url:'./article/removeNode',//
+	  		    data:{
+	  		    	"nodeId":nodeId
+	  		    },
+	  		    type:'get',
+	  		    cache:false,
+	  		    dataType:'json',
+	  		    success:function(data) {
+	  		        if(data.msg =="true" ){
+
+	  		        }else{
+	  		        }
+	  		     },
+	  		     error : function() {
+	  		          alert("异常1！");
+	  		     }
+	  		});
+		}
+		//重命名节点
+		function renameNode(newName, nodeId){
+			$.ajax( {
+	  		    url:'./article/renameNode',
+	  		    data:{
+	  		        "newName":newName,
+	  		    	"nodeId":nodeId
+	  		    },
+	  		    type:'get',
+	  		    cache:false,
+	  		    dataType:'json',
+	  		    success:function(data) {
+	  		        if(data.msg =="true" ){
+
+	  		        }else{
+	  		        }
+	  		     },
+	  		     error : function() {
+	  		          alert("异常1！");
+	  		     }
+	  		});
+		}
+        //判断是否是叶子节点
+        function judgeLeaf(node){
+		    console.log(node);
+            if($("#tt").tree("isLeaf",node.target)){
+                return true;
+            }
+            return false;
+        }
 	</script>
 	<script>
 		function kedit(keid) {
@@ -145,7 +220,14 @@
 	<SCRIPT type="text/javascript">
 		$(function() {
 			kedit("kindeditor");
-		});
+
+            $("#munes ul").tree({
+                onClick:function(node){
+                    alert(node)
+                }
+            });
+
+        });
 	</SCRIPT>
 </body>
 </html>
