@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cn.linkume.pojo.Article;
+import com.cn.linkume.pojo.Content;
 import com.cn.linkume.service.ArticleService;
+import com.cn.linkume.vo.AjaxResultVo;
 
 @Controller
 @RequestMapping("/article")
@@ -34,10 +36,13 @@ public class ArticleController {
 	 */
 	@RequestMapping(value = "/addNode", method = RequestMethod.GET)
 	@ResponseBody
-	public Boolean addNode(String name ,Integer nodeId) {
+	public AjaxResultVo addNode(String name ,Integer nodeId) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
 		// 获取根节点（获取的值存到list中）
-		Boolean result = articleService.addNode(name, nodeId);
-		return result;
+		Article article = articleService.addNode(name, nodeId);
+		ajaxResultVo.setData(article);
+		ajaxResultVo.setRet(true);
+		return ajaxResultVo;
 	}
 	/**
 	 * 删除节点
@@ -60,6 +65,63 @@ public class ArticleController {
 		return result;
 	}
 
+	/**
+	 * 获取节点详情
+	 */
+	@RequestMapping(value = "/getNodeInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public AjaxResultVo getNodeInfoById(Integer nodeId) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
+		// 获取根节点（获取的值存到list中）
+		Article article = articleService.queryArticle(nodeId);
+		ajaxResultVo.setData(article);
+		ajaxResultVo.setRet(true);
+		return ajaxResultVo;
+	}
+	/**
+	 * 获取文章内容
+	 */
+	@RequestMapping(value = "/getContent", method = RequestMethod.GET)
+	@ResponseBody
+	public AjaxResultVo selectByArticleId(Integer nodeId) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
+		Content content = articleService.selectByArticleId(nodeId);
+		String result = "";
+		if (null != content) {
+			result = content.getContent();
+		}
+		/*try {
+			if (null != content) {
+				//result = ConvertUtil.bytesToObject(content.getContent()).toString();
+				result = content.getContent();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		ajaxResultVo.setData(result);
+		ajaxResultVo.setRet(true);
+		return ajaxResultVo;
+	}
+	/**
+	 * 插入或修改文章
+	 */
+	@RequestMapping(value = "/upsertContent", method = RequestMethod.GET)
+	@ResponseBody
+	public AjaxResultVo upsertContent(Integer nodeId, String content) {
+		AjaxResultVo ajaxResultVo = new AjaxResultVo();
+		//查询是否已有articleId
+		Content contentResult = articleService.selectByArticleId(nodeId);
+		if (null != contentResult) {
+			articleService.updateContent(nodeId, content);
+		} else {
+			articleService.insertContent(nodeId, content);
+		}
+		ajaxResultVo.setRet(true);
+		return ajaxResultVo;
+	}
+	
 	public List<Article> buildTree(List<Article> root) {
 		for (int i = 0; i < root.size(); i++) {
 			// 查询某节点的子节点（获取的是list）
@@ -71,4 +133,5 @@ public class ArticleController {
 		return root;
 	}
 
+	
 }

@@ -32,8 +32,8 @@
     delete from article_t
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insertArticle" parameterType="com.cn.linkume.pojo.Article" >
-    insert into article_t (text, pid)
+  <insert id="insertArticle" parameterType="com.cn.linkume.pojo.Article" useGeneratedKeys="true" keyProperty="id">
+    insert into article_t (text, pid, level)
     values (#{text,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{level,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.linkume.pojo.Article" useGeneratedKeys="true" keyProperty="id">

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cn.linkume.dao.ArticleDao;
+import com.cn.linkume.dao.ContentDao;
 import com.cn.linkume.pojo.Article;
+import com.cn.linkume.pojo.Content;
 import com.cn.linkume.service.ArticleService;
 
 @Service("articleServiceImpl")  
@@ -14,6 +16,8 @@ public class ArticleServiceImpl implements ArticleService{
   
     @Autowired  
     private ArticleDao articleDao;  
+    @Autowired  
+    private ContentDao contentDao;  
       
     @Override  
     public List<Article> findByPid(Integer pid) {     
@@ -26,14 +30,14 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
 	@Override
-	public Boolean addNode(String name, Integer nodeId) {
+	public Article addNode(String name, Integer nodeId) {
 		Article article = new Article();
 		article.setPid(nodeId);
 		article.setText(name);
         int level = queryArticle(nodeId).getLevel() + 1;
         article.setLevel(level);
-		articleDao.insertArticle(article);
-		return true;
+        int id = articleDao.insertArticle(article);
+		return article;
 	}
 
     @Override
@@ -58,5 +62,36 @@ public class ArticleServiceImpl implements ArticleService{
         return article;
     }
 
+	@Override
+	public Content selectByArticleId(Integer nodeId) {
+		Content content = contentDao.selectByArticleId(nodeId);
+		return content;
+	}
+
+	@Override
+	public void updateContent(Integer nodeId, String content) {
+		Content cont = new Content();
+		cont.setArticleId(nodeId);
+		cont.setContent(content);
+		/*try {
+			cont.setContent(ConvertUtil.objectToBytes(content));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		contentDao.updateByArticleId(cont);
+	}
+
+	@Override
+	public void insertContent(Integer nodeId, String content) {
+		Content cont = new Content();
+		cont.setArticleId(nodeId);
+		cont.setContent(content);
+		/*try {
+			cont.setContent(ConvertUtil.objectToBytes(content));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		contentDao.insertContent(cont);
+	}
 
 }

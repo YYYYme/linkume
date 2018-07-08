@@ -9,6 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="../static/plugins/css/icon.css" />
 	<script type="text/javascript" src="../static/plugins/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="../static/plugins/easyui/1.3.4/jquery.easyui.min.js"></script>
+<style>
+.save {
+	background-color: #ca5b0f;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    border-radius: 4px;
+}
+</style>
 </head>
 <body>
 	<h2>Tree Context Menu</h2>
@@ -40,26 +49,55 @@
 	<div style="float:left;">
 		<textarea name="content" id="kindeditor"
 				style="width: 800px; height: 400px; display: block;"></textarea>
+    	<a href="#" class="easyui-linkbutton" onclick=save();>保存</a>
 	</div>
+	
 	<script type="text/javascript">
+		//获取节点全部信息
+		function getNodeInfo(nodeId){
+			var result ;
+			$.ajax( {  
+	  		    url:'./article/getNodeInfo',//
+	  		    data:{
+	  		    	"nodeId":nodeId
+	  		    },  
+	  		    type:'get',  
+	  		    cache:false, 
+	  		  	async:false,//取消异步
+	  		    dataType:'json',  
+	  		    success:function(data) {  
+	  		        if(data.code == 0){
+	  		        		result = data.data;            
+	  		        }else{  
+	  		        }  
+	  		     },  
+	  		     error : function() {  
+	  		    	$.messager.alert('error',"异常！");  
+	  		     }  
+	  		});
+			return result;
+		}
+		//新增节点
 		function append(){
-
 			//节点名称
 			var name = prompt();
 			var t = $('#tt');
 			var node = t.tree('getSelected');
+			var nodeInfo = getNodeInfo(node.id);
+			if(nodeInfo.level == 3){
+				$.messager.alert('Warning',"此处不可新增");
+                return;
+			}
+			var newNode = addNode(name,node.id);
 			t.tree('append', {
 				parent: (node?node.target:null),
 				data: {
+					id: newNode.id,
 					text: name
 				},
 			});
-            var isLeaf = judgeLeaf(node);
-            if (isLeaf){
-                alert("此处不可新增");
-                return;
-            }
-			addNode(name,node.id);
+			//刷新
+			$("#tt").tree("reload");
 		}
 		function removeit(){
 		    if (!confirm("确定删除？")){
@@ -68,7 +106,7 @@
 			var node = $('#tt').tree('getSelected');
 		    //根目录不可删除
 			if (node.id == 0){
-			    alert("根目录不可删除");
+				$.messager.alert('Warning',"根目录不可删除");
 			    return;
 			}
 			$('#tt').tree('remove', node.target);
@@ -78,7 +116,6 @@
 		function rename(){
 			var node = $('#tt').tree('getSelected');
             var newName = prompt("请输入名称：");
-            console.log(node);
             renameNode(newName, node.id);
             $("#tt").tree("reload");
 		}
@@ -92,6 +129,7 @@
 		}
 		//增加节点
 		function addNode(name,nodeId){
+			var result;
 			$.ajax( {  
 	  		    url:'./article/addNode',//
 	  		    data:{
@@ -101,16 +139,18 @@
 	  		    type:'get',  
 	  		    cache:false,  
 	  		    dataType:'json',  
+	  		    async:false,
 	  		    success:function(data) {  
-	  		        if(data.msg =="true" ){
-	  		        		            
+	  		        if(data.code == 0){
+	  		        	result = data.data;	            
 	  		        }else{  
 	  		        }  
 	  		     },  
 	  		     error : function() {  
-	  		          alert("异常1！");  
+	  		    	$.messager.alert('Warning',"异常！");  
 	  		     }  
 	  		});
+			return result;
 		}
 		//删除节点
 		function removeNode(nodeId){
@@ -129,7 +169,7 @@
 	  		        }
 	  		     },
 	  		     error : function() {
-	  		          alert("异常1！");
+	  		          a$.messager.alert('error',"异常！");
 	  		     }
 	  		});
 		}
@@ -151,17 +191,59 @@
 	  		        }
 	  		     },
 	  		     error : function() {
-	  		          alert("异常1！");
+	  		    	$.messager.alert('error',"异常！");
 	  		     }
 	  		});
 		}
-        //判断是否是叶子节点
-        function judgeLeaf(node){
-		    console.log(node);
-            if($("#tt").tree("isLeaf",node.target)){
-                return true;
-            }
-            return false;
+        //查询文章内容
+        function getContent(nodeId){
+        	var result ;
+        	$.ajax( {
+	  		    url:'./article/getContent',
+	  		    async:false,
+	  		    data:{
+	  		    	"nodeId":nodeId
+	  		    },
+	  		    type:'get',
+	  		    //dataType:'json',
+	  		    success:function(data) {
+	  		        if(data.code == 0){
+						result = data.data; 
+	  		        }
+	  		     },
+	  		});
+        	return result;
+        }
+        //保存文章
+        function save(){
+        	var content = $("#kindeditor").val();
+        	var node = $('#tt').tree('getSelected');
+        	if(node == null){
+        		$.messager.alert('Warning',"请选择节点");
+        		return;
+        	}
+        	//查询选择节点详情
+			var data = getNodeInfo(node.id);
+        	console.log(data);
+        	if(data.level != 3){
+        		$.messager.alert('Warning',"请选择文章节点");
+        		return;
+        	}
+        	$.ajax( {
+	  		    url:'./article/upsertContent',
+	  		    async:false,
+	  		    data:{
+	  		    	"nodeId":node.id,
+	  		    	"content":content
+	  		    },
+	  		    type:'get',
+	  		    //dataType:'json',
+	  		    success:function(data) {
+	  		        if(data.code == 0){
+	  		        	$.messager.alert('info',"保存成功"); 
+	  		        }
+	  		     },
+	  		});
         }
 	</script>
 	<script>
@@ -220,13 +302,21 @@
 	<SCRIPT type="text/javascript">
 		$(function() {
 			kedit("kindeditor");
-
-            $("#munes ul").tree({
-                onClick:function(node){
-                    alert(node)
-                }
-            });
-
+			//节点单击事件
+			$('#tt').tree({
+				onClick: function(node){
+					var data = getNodeInfo(node.id);
+					if(data.level == 3){
+						//查询文章内容
+						var data = getContent(node.id);
+						if(data == null){
+							data='';
+						}
+						//显示数据库存储的文章内容
+						document.getElementsByTagName("iframe")[0].contentWindow.document.body.innerHTML = data;
+					}
+				}
+			});
         });
 	</SCRIPT>
 </body>

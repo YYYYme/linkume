@@ -8,7 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cn.linkume.pojo.Article;
+import com.cn.linkume.pojo.Content;
 import com.cn.linkume.pojo.User;
+import com.cn.linkume.service.ArticleService;
 import com.cn.linkume.service.IUserService;
 
 //让测试运行于Spring环境  
@@ -19,6 +22,8 @@ public class TestMybatis {
 	private static Logger logger = Logger.getLogger(TestMybatis.class);
 	@Resource
 	private IUserService userService;
+	@Resource
+	private ArticleService articleService;
 
 	/*
 	 * @Before public void before() { ac = new
@@ -37,10 +42,15 @@ public class TestMybatis {
 	public void test2() {
 		User user = new User();
 		// user.setId(4);
-		user.setUserName("123");
+		user.setUserName("业务员");
 		user.setPassword("123456");
 		user.setAge(0);
 		boolean is = userService.insertUser(user);
 		logger.info("insert:" + user.getUserName());
+	}
+	
+	@Test
+	public void testArticleService() {
+		articleService.addNode("123", 5);
 	}
 }
