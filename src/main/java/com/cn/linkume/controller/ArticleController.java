@@ -14,6 +14,9 @@ import com.cn.linkume.pojo.Content;
 import com.cn.linkume.service.ArticleService;
 import com.cn.linkume.vo.AjaxResultVo;
 
+/**
+ * 作品管理类
+ */
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
