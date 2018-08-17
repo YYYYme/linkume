@@ -52,4 +52,6 @@
     </bean>    -->
     <mvc:annotation-driven />
     <mvc:resources location="/" mapping="/**"></mvc:resources>
+    <context:property-placeholder location="classpath:*.properties"/>
+
 </beans>  

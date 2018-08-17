@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import com.cn.linkume.vo.PageData;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	@Resource
 	private IUserService userService;
 
@@ -62,7 +65,6 @@ public class UserController {
 	 * 分页查询用户列表
 	 *
 	 * @param request
-	 * @param model
 	 * @return
 	 * @author hanshumin
 	 * @date 2018年5月9日 上午11:04:14
@@ -181,7 +183,6 @@ public class UserController {
 	 * 删除用户（by id)
 	 *
 	 * @param request
-	 * @param model
 	 * @return
 	 * @author chenwenc
 	 * @date 
@@ -200,5 +201,20 @@ public class UserController {
 			ajaxResultVo.setMsg(String.format("您输入的用户%s不存在或者已经被删除！", userId));
 		}
 		return ajaxResultVo;
+	}
+
+	/**
+	 * 接收字符串测试
+	 *
+	 * @param request
+	 * @return
+	 * @author chenwenc
+	 * @date
+	 */
+	@RequestMapping(value = "/lfq")
+	@ResponseBody
+	public void getLfq(HttpServletRequest request) {
+		LOG.info("lfq:"+request.getQueryString());
+		System.out.println("lfq:"+request.getQueryString());
 	}
 }
