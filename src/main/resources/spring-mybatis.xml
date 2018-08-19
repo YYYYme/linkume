@@ -19,6 +19,7 @@
         <property name="locations">  
 	        <list>
 	        	<value>classpath:jdbc.properties</value>  
+	        	<value>classpath:chess-server.properties</value>  
 	        </list>
 	    </property>
     </bean>  
@@ -63,4 +64,5 @@
     </bean>  
   	
   	<bean name="pagePlugin" class="com.cn.linkume.dao.plugin.PageHelper" />
+  	
 </beans>  

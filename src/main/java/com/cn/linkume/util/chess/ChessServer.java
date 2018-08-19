@@ -1,4 +1,4 @@
-package com.cn.linkume.service.impl;
+package com.cn.linkume.util.chess;
 
 
 import com.cn.linkume.pojo.ChessMsg;

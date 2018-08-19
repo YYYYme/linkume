@@ -1,4 +1,4 @@
-package com.cn.linkume.service.impl;
+package com.cn.linkume.util.chess;
 
 import com.cn.linkume.pojo.ChessMsg;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +9,7 @@ import java.net.SocketException;
 public class ChessUserService implements Runnable {
 	@Value("${chess.server.timeout}")
 	private int timeout;
+	
 	private Socket socket;
 	private ChessServer server;
 
@@ -23,11 +24,11 @@ public class ChessUserService implements Runnable {
 			socket.setSoTimeout(timeout);
 		} catch (SocketException e1) {
 		}
-		// 1.µÇÂ½
+		// 1.ï¿½ï¿½Â½
 		if (!server.login(socket)) {
 			return;
 		}
-		// 2.¶ÁÈ¡ÏûÏ¢
+		// 2.ï¿½ï¿½È¡ï¿½ï¿½Ï¢
 		try {
 			String data = null;
 			while ((data = ChessMsg.read(socket)) != null) {

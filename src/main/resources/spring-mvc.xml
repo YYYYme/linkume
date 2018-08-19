@@ -52,6 +52,13 @@
     </bean>    -->
     <mvc:annotation-driven />
     <mvc:resources location="/" mapping="/**"></mvc:resources>
-    <context:property-placeholder location="classpath:*.properties"/>
-
+    <!-- 引入配置文件 -->  
+    <bean id="propertyConfigurer"  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="locations">  
+	        <list>
+	        	<value>classpath:chess-server.properties</value>  
+	        </list>
+	    </property>
+    </bean> 
 </beans>  
