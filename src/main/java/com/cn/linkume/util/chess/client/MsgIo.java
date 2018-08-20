@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class MsgIo {
 	private String selfName;
 	private String otherName;
-	// ·şÎñÆ÷¿ÚÁî
+	// æœåŠ¡å™¨å£ä»¤
 	private String password = "lym77";
 	// private String ip="121.42.38.117";
-	// ·şÎñÆ÷µØÖ·
+	// æœåŠ¡å™¨åœ°å€
 	public static String ip = "127.0.0.1";
 	public static int port = 8888;
 	public Socket socket;
@@ -49,7 +49,7 @@ public class MsgIo {
 		@Override
 		public void run() {
 			try {
-				// µÇÂ½
+				// ç™»é™†
 				if (login()) {
 					loginSuccess();
 				} else {

@@ -3,47 +3,111 @@ package com.cn.linkume.util.chess.client;
 import java.awt.Point;
 
 public class Rule {
+
 	/**
-	 * »ñÈ¡Ä¬ÈÏÆå×Ó²¼¾Ö
+	 * è·å–é»˜è®¤æ£‹å­å¸ƒå±€
 	 * @return
 	 */
 	public static int[] getDefaultMap() {
 		return new int[] {
 				// 1
-				17, 15, 12, 11, 14, 11, 12, 15, 17,
+				0, 0, 0, 0, 0,14, 0, 0, 0, 0, 0,
 				// 2
-				0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0,15, 0,13, 0, 0, 0, 0,
 				// 3
-				0, 13, 0, 0, 0, 0, 0, 13, 0,
+				0, 0, 0, 0,16, 0,12, 0, 0, 0, 0,
 				// 4
-				16, 0, 16, 0, 16, 0, 16, 0, 16,
+				0, 0, 0, 0, 0,11, 0, 0, 0, 0, 0,
 				// 5
-				0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				// 6
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				// 5
-				0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				// 4
-				26, 0, 26, 0, 26, 0, 26, 0, 26,
+				0, 0, 0, 0, 0,21, 0, 0, 0, 0, 0,
 				// 3
-				0, 23, 0, 0, 0, 0, 0, 23, 0,
+				0, 0, 0, 0,22, 0,26, 0, 0, 0, 0,
 				// 2
-				0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0,23, 0,25, 0, 0, 0, 0,
 				// 1
-				27, 25, 22, 21, 24, 21, 22, 25, 27 };
+				0, 0, 0, 0, 0,24, 0, 0, 0, 0, 0, };
 	}
 
-	// 1£ºÊ¿£»2£ºÏó£»3£ºÅÚ£»4£º½«£»5£ºÂí£»6£º×ä£»7£º³µ
+	// 1ï¼šå£«ï¼›2ï¼šè±¡ï¼›3ï¼šç‚®ï¼›4ï¼šå°†ï¼›5ï¼šé©¬ï¼›6ï¼šå’ï¼›7ï¼šè½¦
+	// 1: é‡‘; 2: æœ¨; 3; æ°´; 4: å°†; 5ï¼šç«ï¼›6ï¼šåœŸï¼›
 	/**
-	 * Èç¹û¿ÉÒÔ³Ô£¨°üÀ¨ÖÕµãÃ»ÓĞÆå×ÓµÄÇé¿ö£©
-	 * @param map Æå×Ó²¼¾Ö
-	 * @param start Æğµã
-	 * @param aim ÖÕµã
-	 * @return Èç¹ûÆå×Ó¿ÉÒÔ×ß¹ıÈ¥£¬·µ»ØÕæ
+	 * å¦‚æœå¯ä»¥åƒï¼ˆåŒ…æ‹¬ç»ˆç‚¹æ²¡æœ‰æ£‹å­çš„æƒ…å†µï¼‰
+	 * @param map æ£‹å­å¸ƒå±€
+	 * @param start èµ·ç‚¹
+	 * @param aim ç»ˆç‚¹
+	 * @return å¦‚æœæ£‹å­å¯ä»¥èµ°è¿‡å»ï¼Œè¿”å›çœŸ
 	 */
 	public static boolean canEat(int[] map, int start, int aim) {
 		Point p1 = intToPoint(start);
 		Point p2 = intToPoint(aim);
+		//é‡‘
+		if (map[start] % 10 == 1){
+			//æ¨ªç€èµ°
+			if (Math.abs(p1.x - p2.x) == 1 && Math.abs(p1.y - p2.y) == 0){
+				return true;
+			}
+			//ç«–ç€èµ°
+			if(Math.abs(p1.x - p2.x) == 0 && Math.abs(p1.y - p2.y) == 1){
+				return true;
+			}
+			return false;
+		}
+		//æœ¨
+		if (map[start] % 10 == 2){
+			//æ¨ªç€èµ°
+			if (Math.abs(p1.x - p2.x) == 1 && Math.abs(p1.y - p2.y) == 0){
+				return true;
+			}
+			//ç«–ç€èµ°
+			if(Math.abs(p1.x - p2.x) == 0 && Math.abs(p1.y - p2.y) == 1){
+				return true;
+			}
+			return false;
+		}
+		//æ°´
+		if (map[start] % 10 == 3){
+			//æ¨ªç€èµ°
+			if (Math.abs(p1.x - p2.x) == 1 && Math.abs(p1.y - p2.y) == 0){
+				return true;
+			}
+			//ç«–ç€èµ°
+			if(Math.abs(p1.x - p2.x) == 0 && Math.abs(p1.y - p2.y) == 1){
+				return true;
+			}
+			return false;
+		}
+		//ç«
+		if (map[start] % 10 == 5){
+			//æ¨ªç€èµ°
+			if (Math.abs(p1.x - p2.x) == 1 && Math.abs(p1.y - p2.y) == 0){
+				return true;
+			}
+			//ç«–ç€èµ°
+			if(Math.abs(p1.x - p2.x) == 0 && Math.abs(p1.y - p2.y) == 1){
+				return true;
+			}
+			return false;
+		}
+		//åœŸ
+		if (map[start] % 10 == 6){
+			//æ¨ªç€èµ°
+			if (Math.abs(p1.x - p2.x) == 1 && Math.abs(p1.y - p2.y) == 0){
+				return true;
+			}
+			//ç«–ç€èµ°
+			if(Math.abs(p1.x - p2.x) == 0 && Math.abs(p1.y - p2.y) == 1){
+				return true;
+			}
+			return false;
+		}
 		if (map[start] % 10 == 1) {
-			// Èç¹ûÆğµãÊÇÊ¿
+			// å¦‚æœèµ·ç‚¹æ˜¯å£«
 			// 3,0---3,9
 			// 4,1---4,8
 			// 5,2---5,7
@@ -59,16 +123,16 @@ public class Rule {
 			return false;
 		}
 		if (map[start] % 10 == 2) {
-			// Èç¹ûÆğµãÊÇÏó
+			// å¦‚æœèµ·ç‚¹æ˜¯è±¡
 			if(aim<45&&start>45){
 				return false;
 			}
 			if(aim>45&&start<45){
 				return false;
 			}
-			//Èç¹ûÊÇÌï
+			//å¦‚æœæ˜¯ç”°
 			if (Math.abs(p1.x - p2.x) == 2 && Math.abs(p1.y - p2.y) == 2){
-				//Èç¹ûÃ»ÓĞ±»×èÈû
+				//å¦‚æœæ²¡æœ‰è¢«é˜»å¡
 				if(map[pointToInt((p1.x+p2.x)/2, (p1.y+p2.y)/2)]%10==0){
 					return true;
 				};
@@ -76,18 +140,18 @@ public class Rule {
 			return false;
 		}
 		if (map[start] % 10 == 3) {
-			// Èç¹ûÆğµãÊÇÅÚ
+			// å¦‚æœèµ·ç‚¹æ˜¯ç‚®
 			if(p1.y==p2.y){
 				if(p1.x>p2.x){
-					//Ïò×ó
-					//ÕÏµK”µ
+					//å‘å·¦
+					//éšœç¤™æ•¸
 					int temp = 0;
 					for (int i = 1; i < p1.x-p2.x; i++) {
 						if(map[pointToInt(p1.x-i, p1.y)]%10!=0){
 							temp++;
 						}
 					}
-					//Èç¹û½KücÓĞ×Ó
+					//å¦‚æœçµ‚é»æœ‰å­
 					if(map[aim]%10!=0){
 						if(temp==1){
 							return true;
@@ -98,15 +162,15 @@ public class Rule {
 						}
 					}
 				}else{
-					//ÏòÓÒ
-					//ÕÏµK”µ
+					//å‘å³
+					//éšœç¤™æ•¸
 					int temp = 0;
 					for (int i = 1; i < p2.x-p1.x; i++) {
 						if(map[pointToInt(p1.x+i, p1.y)]%10!=0){
 							temp++;
 						}
 					}
-					//Èç¹û½KücÓĞ×Ó
+					//å¦‚æœçµ‚é»æœ‰å­
 					if(map[aim]%10!=0){
 						if(temp==1){
 							return true;
@@ -120,15 +184,15 @@ public class Rule {
 			}
 			if(p1.x==p2.x){
 				if(p1.y>p2.y){
-					//ÏòÉÏ
-					//ÕÏµK”µ
+					//å‘ä¸Š
+					//éšœç¤™æ•¸
 					int temp = 0;
 					for (int i = 1; i < p1.y-p2.y; i++) {
 						if(map[pointToInt(p1.x, p1.y-i)]%10!=0){
 							temp++;
 						}
 					}
-					//Èç¹û½KücÓĞ×Ó
+					//å¦‚æœçµ‚é»æœ‰å­
 					if(map[aim]%10!=0){
 						if(temp==1){
 							return true;
@@ -139,15 +203,15 @@ public class Rule {
 						}
 					}
 				}else{
-					//ÏòÏÂ
-					//ÕÏµK”µ
+					//å‘ä¸‹
+					//éšœç¤™æ•¸
 					int temp = 0;
 					for (int i = 1; i < p2.y-p1.y; i++) {
 						if(map[pointToInt(p1.x, p1.y+i)]%10!=0){
 							temp++;
 						}
 					}
-					//Èç¹û½KücÓĞ×Ó
+					//å¦‚æœçµ‚é»æœ‰å­
 					if(map[aim]%10!=0){
 						if(temp==1){
 							return true;
@@ -161,12 +225,12 @@ public class Rule {
 			}
 		}
 		if (map[start] % 10 == 4) {
-			// Èç¹ûÆğµãÊÇ½«
+			// å¦‚æœèµ·ç‚¹æ˜¯å°†
 			if(map[aim] % 10 == 4){
-				//Èç¹û½KücÒ²ÊÇŒ¢
+				//å¦‚æœçµ‚é»ä¹Ÿæ˜¯å°‡
 				if(p1.x==p2.x){
 					if(p1.y>p2.y){
-						//ÏòÉÏ
+						//å‘ä¸Š
 						for (int i = 1; i < p1.y-p2.y; i++) {
 							if(map[pointToInt(p1.x, p1.y-i)]%10!=0){
 								return false;
@@ -174,7 +238,7 @@ public class Rule {
 						}
 						return true;
 					}else{
-						//ÏòÏÂ
+						//å‘ä¸‹
 						for (int i = 1; i < p2.y-p1.y; i++) {
 							if(map[pointToInt(p1.x, p1.y+i)]%10!=0){
 								return false;
@@ -197,28 +261,28 @@ public class Rule {
 			return false;
 		}
 		if (map[start] % 10 == 5) {
-			// Èç¹ûÆğµãÊÇÂí
+			// å¦‚æœèµ·ç‚¹æ˜¯é©¬
 			if(Math.abs(p1.x - p2.x)+Math.abs(p1.y - p2.y)==3){
 				if(p1.x - p2.x==2){
-					//Ïò×ó
+					//å‘å·¦
 					if(map[pointToInt(p1.x-1, p1.y)]%10==0){
 						return true;
 					}
 				}
 				if(p1.x - p2.x==-2){
-					//ÏòÓÒ
+					//å‘å³
 					if(map[pointToInt(p1.x+1, p1.y)]%10==0){
 						return true;
 					}
 				}
 				if(p1.y - p2.y==2){
-					//ÏòÉÏ
+					//å‘ä¸Š
 					if(map[pointToInt(p1.x, p1.y-1)]%10==0){
 						return true;
 					}
 				}
 				if(p1.y - p2.y==-2){
-					//ÏòÏÂ
+					//å‘ä¸‹
 					if(map[pointToInt(p1.x, p1.y+1)]%10==0){
 						return true;
 					}
@@ -227,7 +291,7 @@ public class Rule {
 		}
 
 		if (map[start] % 10 == 6) {
-			// Èç¹ûÆğµãÊÇ×ä
+			// å¦‚æœèµ·ç‚¹æ˜¯å’
 			if(Math.abs(p1.x - p2.x)+Math.abs(p1.y - p2.y)==1){
 				if(p1.y-p2.y==-1){
 					return false;
@@ -241,10 +305,10 @@ public class Rule {
 			}
 		}
 		if (map[start] % 10 == 7) {
-			// Èç¹ûÆğµãÊÇ³µ
+			// å¦‚æœèµ·ç‚¹æ˜¯è½¦
 			if(p1.y==p2.y){
 				if(p1.x>p2.x){
-					//Ïò×ó
+					//å‘å·¦
 					for (int i = 1; i < p1.x-p2.x; i++) {
 						if(map[pointToInt(p1.x-i, p1.y)]%10!=0){
 							return false;
@@ -252,7 +316,7 @@ public class Rule {
 					}
 					return true;
 				}else{
-					//ÏòÓÒ
+					//å‘å³
 					for (int i = 1; i < p2.x-p1.x; i++) {
 						if(map[pointToInt(p1.x+i, p1.y)]%10!=0){
 							return false;
@@ -263,7 +327,7 @@ public class Rule {
 			}
 			if(p1.x==p2.x){
 				if(p1.y>p2.y){
-					//ÏòÉÏ
+					//å‘ä¸Š
 					for (int i = 1; i < p1.y-p2.y; i++) {
 						if(map[pointToInt(p1.x, p1.y-i)]%10!=0){
 							return false;
@@ -271,7 +335,7 @@ public class Rule {
 					}
 					return true;
 				}else{
-					//ÏòÏÂ
+					//å‘ä¸‹
 					for (int i = 1; i < p2.y-p1.y; i++) {
 						if(map[pointToInt(p1.x, p1.y+i)]%10!=0){
 							return false;
@@ -286,43 +350,34 @@ public class Rule {
 	}
 
 	/**
-	 * ½«µã×ª»»ÎªÊı×éÖ¸ÕëË÷Òı
-	 * @param x ºá×ø±ê
-	 * @param y ×Ü×ø±ê
-	 * @return ·µ»ØÕûĞÎ
+	 * å°†ç‚¹è½¬æ¢ä¸ºæ•°ç»„æŒ‡é’ˆç´¢å¼•
+	 * @param x æ¨ªåæ ‡
+	 * @param y æ€»åæ ‡
+	 * @return è¿”å›æ•´å½¢
 	 */
 	public static int pointToInt(int x, int y) {
-		return x + y * 9;
+		return x + y * 11;
 	}
 
 	/**
-	 * ½«Êı×éÖ¸Õë×ª»»Îª×ø±êµã
-	 * @param num Êı×éÖ¸Õë
-	 * @return ·µ»Ø×ø±êµã
+	 * å°†æ•°ç»„æŒ‡é’ˆè½¬æ¢ä¸ºåæ ‡ç‚¹
+	 * @param num æ•°ç»„æŒ‡é’ˆ
+	 * @return è¿”å›åæ ‡ç‚¹
 	 */
 	public static Point intToPoint(int num) {
-		return new Point(num % 9, num / 9);
+		return new Point(num % 11, num / 11);
 	}
 
 	/**
-	 * ½«Æå×Ó²¼¾Ö·­×ª
-	 * @param map Æå×Ó²¼¾Ö
-	 * @return ·µ»ØÆå×Ó²¼¾ÖÊı×é
+	 * å°†æ£‹å­å¸ƒå±€ç¿»è½¬
+	 * @param map æ£‹å­å¸ƒå±€
+	 * @return è¿”å›æ£‹å­å¸ƒå±€æ•°ç»„
 	 */
-	public static int[] rotateMap(int map[]) {
-		// µÚ1ĞĞµ½µÚ10ĞĞ
-		// 1-->10,2-->9,3-->8,4-->7,5-->6
+	public static int[] rotateMap (int map[]) {
 		int re[] = new int[map.length];
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 9; j++) {
-				// 12345 54321
-				// µÚ1ĞĞÏòÓÒÎ»ÒÆ9
-				// 9£¬7£¬5£¬3£¬1
-				int p = 9 - i * 2;
-				p = p * 9;
-				re[i * 9 + j + p] = map[i * 9 + j];
-				re[i * 9 + j] = map[i * 9 + j + p];
-			}
+		for (int i = 0; i < map.length/2 + 1; i++) {
+			re[map.length - i -1] = map[i];
+			re[i] = map[map.length - i -1];
 		}
 		return re;
 	}

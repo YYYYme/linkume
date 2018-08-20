@@ -8,20 +8,20 @@ public class Msg {
 	private String from;
 	private String to;
 	private String content;
-	//ø’∏Ò∑÷∏Ù∑˚
+	//Á©∫Ê†ºÂàÜÈöîÁ¨¶
 	private final String SPLIT = " ";
-	//ø’∏Ò
+	//Á©∫Ê†º
 	private final String REPLACE_SPLIT = "&nbsp;";
-	//ªª––
+	//Êç¢Ë°å
 	private final String NEW_LINE="<br>";
 	
 	public Msg(String info) throws Exception {
 		if (info == null) {
-			throw new Exception("¥¥Ω®œ˚œ¢ ß∞‹");
+			throw new Exception("create msg fail");
 		}
 		String tag[] = info.split(" ");
 		if (tag.length < 3) {
-			throw new Exception("¥¥Ω®œ˚œ¢ ß∞‹");
+			throw new Exception("create msg fail");
 		}
 		this.from = tag[0];
 		this.to = tag[1];
@@ -35,8 +35,8 @@ public class Msg {
 	}
 
 	/**
-	 * Ω´œ˚œ¢◊™ªªŒ™’˝≥£◊÷∑˚∏Ò Ω
-	 * 
+	 * Â∞ÜÊ∂àÊÅØËΩ¨Êç¢‰∏∫Ê≠£Â∏∏Â≠óÁ¨¶Ê†ºÂºè
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -46,8 +46,8 @@ public class Msg {
 	}
 
 	/**
-	 * Ω´◊÷∑˚◊™ªªŒ™œ˚œ¢∏Ò Ω
-	 * 
+	 * Â∞ÜÂ≠óÁ¨¶ËΩ¨Êç¢‰∏∫Ê∂àÊÅØÊ†ºÂºè
+	 *
 	 * @param str
 	 * @return
 	 */
